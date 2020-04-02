@@ -6,13 +6,13 @@
     <title>{{ name }}'watchlist</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
 </head>
-<body>
+<body>  
     <h2>
         <img src="{{ url_for('static',filename='images/tt.jpg') }}" alt="头像" class="avatar">
         {{ name }}'watchlist
     </h2>
     <p>总共{{ movies|length }}个电影</p>
-    <ul>
+    <ul calss="movie-list">
         {% for i in movies %}
         <li>{{ i.title }} - {{ i.year }}</li>
         {% endfor %}
