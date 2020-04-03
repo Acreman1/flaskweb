@@ -13,6 +13,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path,'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# flash需要设置的密钥
 app.config['SECRET_KEY'] = '1903_dev'
 
 db = SQLAlchemy(app)
