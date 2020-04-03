@@ -29,19 +29,15 @@ class Movie(db.Model):
 # views 视图函数
 @app.route('/')
 def index():
-    name = "Acreman"
-    movies = [
-        {"title":"战狼2","year":"2019"},
-        {"title":"速度与激情8","year":"2018"},
-        {"title":"叶问4","year":"2020"},
-        {"title":"南方车站","year":"2019"},
-        {"title":"复仇者联盟4","year":"2019"},
-    ]
-    return render_template("index.html",name=name,movies=movies)
+    user = User.query.first()
+    movies = Movie.query.all()
+    return render_template("index.html",user=user,movies=movies)
 
 
 
 # 自定义命令
+
+# 建立数据库
 @app.cli.command()  # 注册为命令
 @click.option('--drop',is_flag=True,help="先删除再创建")
 def initdb(drop):
@@ -50,4 +46,21 @@ def initdb(drop):
     db.create_all()
     click.echo('初始化数据库')
 
+# 向数据库中插入数据
+@ app.cli.command()
+def forge():
+    name = "Acreman"
+    movies = [
+        {"title":"战狼2","year":"2019"},
+        {"title":"速度与激情8","year":"2018"},
+        {"title":"叶问4","year":"2020"},
+        {"title":"南方车站","year":"2019"},
+        {"title":"复仇者联盟4","year":"2019"},
+    ]
+    user = User(name=name)
+    db.session.add(user)
+    for m in movies:
+        movie = Movie(title=m['title'],year=m['year'])
+        db.session.add(movie)
+    db.session.commit()
 
