@@ -1,6 +1,6 @@
 import os,sys
 
-from flask import Flask,url_for,render_template
+from flask import Flask,url_for,render_template,flash,redirect,request
 from flask_sqlalchemy import SQLAlchemy
 import click
 
@@ -13,6 +13,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path,'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = '1903_dev'
 
 db = SQLAlchemy(app)
 
@@ -27,8 +28,20 @@ class Movie(db.Model):
     year = db.Column(db.String(4))
 
 # views 视图函数
-@app.route('/')
+@app.route('/',methods=['GET','POST'])
 def index():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        year = request.form.get('year')
+        if not title or not year or len(year)>4 or len(title)>60:
+            flash("输入错误")
+            return redirect(url_for('index'))
+        movie = Movie(title=title,year=year)
+        db.session.add(movie)
+        db.session.commit()
+        flash('插入成功')
+        return redirect(url_for('index'))
+
     movies = Movie.query.all()
     return render_template("index.html",movies=movies)
 
