@@ -46,6 +46,7 @@ def initdb(drop):
     db.create_all()
     click.echo('初始化数据库')
 
+
 # 向数据库中插入数据
 @ app.cli.command()
 def forge():
@@ -63,4 +64,11 @@ def forge():
         movie = Movie(title=m['title'],year=m['year'])
         db.session.add(movie)
     db.session.commit()
+    click.echo('导入数据完成')
+
+# 错误处理函数
+@app.errorhandler(404)
+def page_not_found(e):
+    user = User.query.first()
+    return render_template('404.html',user=user)
 
