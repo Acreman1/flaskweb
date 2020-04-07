@@ -58,6 +58,7 @@ nav li a:hover{
 
 .float-right{
     float: right;
+    margin-right: 5px;
 }
 
 .baidu{
