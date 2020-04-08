@@ -123,10 +123,10 @@ def logout():
 @login_required
 def setting():
     if request.method == 'POST':
-        name = request.form.get("name")
+        name = request.form.get("title")
         if not name or len(name)>20:
             flash("输入错误")
-            return redirect(url_for("setting.html"))
+            return redirect(url_for("setting"))
         current_user.name = name
         db.session.commit()
         flash('名字已更新')
