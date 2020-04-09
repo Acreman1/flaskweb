@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue购物车</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container{
+            width: 50%;
+            margin: 100px auto;
+        }
+        .removed{
+            color: grey;
+        }
+        .removed label{
+            text-decoration: line-through;
+        }
+        ul{
+            border: 1px solid black;
+            margin-top: 30px;
+        }
+        ul li{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class='container' id='app'>
+        <h2>{{ title }}</h2>
+        <!-- 添加数据 -->
+        <div class="input-group">
+            <input v-model='newItem' type="text" v-on:click='showItem' class='form-control' placeholder="输入你想购买的物品" required>
+            <span class="input-group-btn">
+                <button v-on:click='addItem' type="button" class="btn btn-default">添加到购物车</button>
+            </span>
+        </div>
+        <ul>
+            <!-- 模板循环 -->
+            <li v-for='i in items' v-bind:class='{"removed":i.checked}'>
+                <div class="checkbox">
+                     <label for="">
+                         <input type="checkbox" v-model="i.checked">{{ i.text }}
+                     </label>
+                </div> 
+             </li>
+        </ul>
+        <!-- 修改标题 -->
+        <div class='footer'>
+            <hr>
+            <span>改变标题</span>
+            <!-- 双向数据绑定 -->
+            <input v-model='title'>
+        </div>
+    </div>
+
+</body>
+<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+<script>
+    var data = {
+        items:[
+            {text:'苹果',checked:true},
+            {text:'橘子',checked:true},
+            {text:'香蕉',checked:true},
+            {text:'桔子',checked:true}
+        ],
+        title:"我的购物车列表",
+        newItem:''
+    }
+    var app = new Vue({
+        el:'#app',
+        data:data,
+        // 在这个函数里面写JS的代码
+        methods:{
+            addItem:function(){
+                var text;
+                text = this.newItem.trim();
+                if(text){
+                    this.items.push({
+                        text:text,
+                        checked:false
+                    })
+                };
+                this.newItem = ''
+            },
+            showItem:function(){
+                console.log('我爱你')
+            }
+        }
+    })
+</script>
+</html>
