@@ -69,11 +69,12 @@
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    // 回调函数
+    // 回调函数 ready
     $(document).ready(function(){
+        // 添加购物车的函数
         $(".js-add").click(function(){
             var $ul,$li,$label,$div,$value
-            // 获取表单的值
+            // 获取表单的值 val()里面有参数的话就是参数的值
             value = $(".js-new-item").val();
             if (value === ""){
                 return;
@@ -84,16 +85,19 @@
             $label = $("<label>").appendTo($div)
             $('<input>').addClass('js-item').attr('type','checkbox').appendTo($label).click(function(){$(this).closest('li').toggleClass('removed')})
             $label.append(value)
+            $(".js-new-item").val('')
         })
 
         $(".js-item").click(function(){
             // 获取当前对象    closest是遍历
             $(this).closest('li').toggleClass('removed')
+            
         })
 
         $('.js-change-title').keyup(function(){
             $('h2').text($('.js-change-title').val())
         })
+        
     })
 </script>
 </html>
