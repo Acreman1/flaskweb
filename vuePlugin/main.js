@@ -13,6 +13,15 @@ exports.default = {
         Vue.directive('sqrts', function (el, binding) {
             el.innerHTML = Math.sqrt(binding.value);
         });
+        Vue.directive('coss', function (el, binding) {
+            el.innerHTML = Math.cos(binding.value * Math.PI / 180);
+        });
+        Vue.directive('sins', function (el, binding) {
+            el.innerHTML = Math.sin(binding.value * Math.PI / 180);
+        });
+        Vue.directive('tans', function (el, binding) {
+            el.innerHTML = Math.tan(binding.value * Math.PI / 180);
+        });
     }
 };
 
@@ -12268,7 +12277,7 @@ _vue2.default.use(_VueMathPlugin2.default);
 new _vue2.default({
     el: '#app',
     data: {
-        'item': 20
+        'item': 90
     }
 });
 
