@@ -1,0 +1,92 @@
+import Mock from 'mockjs'
+
+Mock.mock(/getLatestNews/,{
+    'list|5':[
+        {
+            'url':'@url',
+            'title':'@ctitle(8,15)'
+        }
+    ]
+})
+
+Mock.mock(/getProductList/,{
+    pc:{
+        title:"PC产品",
+        hr:"true",
+        list:[
+            {
+                title:"@ctitle(6)",
+                url:"@url",
+                hot:'@boolean'
+            },
+            {
+                title:"@ctitle(6)",
+                url:"@url",
+                hot:'@boolean'
+            },
+            {
+                title:"@ctitle(6)",
+                url:"@url",
+                hot:'@boolean'
+            },
+            {
+                title:"@ctitle(6)",
+                url:"@url",
+                hot:'@boolean'
+            },
+        ]
+    },
+    app:{
+        title:"APP应用",
+        list:[
+                {
+                titl:"@ctitle(6)",
+                ur:"@url"
+                },
+                {
+                    title:"@ctitle(6)",
+                    url:"@url",
+                    hot:'@boolean'
+                },
+                {
+                    title:"@ctitle(6)",
+                    url:"@url"
+                },
+                {
+                    title:"@ctitle(6)",
+                    url:"@url",
+                    hot:'@boolean'
+                },
+                {
+                    title:"@ctitle(6)",
+                    url:"@url",
+                    hot:'@boolean'
+                },
+            ]
+        }
+})
+
+Mock.mock(/getBoardList/,[
+    {
+        title:'@ctitle(4)',
+        description:'@ctitle(8)',
+        saleout:'true'
+    },
+    {
+        title:'@ctitle(4)',
+        description:'@ctitle(8)',
+        saleout:'true'
+    },
+    {
+        title:'@ctitle(4)',
+        description:'@ctitle(8)',
+        saleout:'true'
+    },
+    {
+        title:'@ctitle(4)',
+        description:'@ctitle(8)',
+        saleout:'true'
+    }
+])
+
+export default Mock

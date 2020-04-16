@@ -20,6 +20,13 @@ export default {
         STARTED:'started',
         STOPPED:'stopped',
         PAUSE:'pause'
+      },
+      data:{
+        minute:this.WORKING_FEN,
+        second:0,
+        workState:this.WROK_STATES.WORK,
+        timestamp:0,
+        state:this.STATES.STOPPED
       }
     }
   }

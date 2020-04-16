@@ -18,86 +18,60 @@
             <div class='index-left-block lastest-news'>
                 <h2>最新消息</h2>
                 <ul>
-                    <li v-for="news in latestNews.list">
+                    <li v-for="news in latestNews">
                         <a v-bind:href='news.url'>{{ news.title }}</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class='index-right'>
-            <div class='tongtong'>
-                组件代替
-            </div>
+            <slider-component></slider-component>
             <div class='index-border-list'>
-                <div class='index-border-item'>
+                <div class='index-border-item' v-for="item in boardList">
                     <div class='index-border-item-inner'>
-                        <h2>第一个</h2>
-                        <p>第一个的描述</p>
-                        <div class='index-border-buttom'>
-                            立即购买
-                        </div>
-                    </div>
-                </div>
-                <div class='index-border-item'>
-                    <div class='index-border-item-inner'>
-                        <h2>第二个</h2>
-                        <p>第二个的描述</p>
-                        <div class='index-border-buttom'>
-                            立即购买
-                        </div>
-                    </div>
-                </div>
-                <div class='index-border-item'>
-                    <div class='index-border-item-inner'>
-                        <h2>第三个</h2>
-                        <p>第三个的描述</p>
-                        <div class='index-border-buttom'>
-                            立即购买
-                        </div>
-                    </div>
-                </div>
-                <div class='index-border-item'>
-                    <div class='index-border-item-inner'>
-                        <h2>第四个</h2>
-                        <p>第四个的描述</p>
-                        <div class='index-border-buttom'>
+                        <h2>{{ item.title }}</h2>
+                        <p>{{ item.description }}</p>
+                        <div v-if="item.saleout" class='index-border-buttom'>
                             立即购买
                         </div>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import SliderComponent from '../components/slidercomponent'
 export default {
+    components:{
+        SliderComponent
+    },
     mounted(){
-        axios.get('api/getPcList')
+        axios.get('api/getLatestNews')
         // => 函数可以理解为匿名函数
         .then((res) => {
             console.log(res)
-            this.newsList = res.data.list
+            this.latestNews = res.data.list
         })
         .catch((error) => {
             comsole.log(error)
-        })
-        axios.get('api/getAppList')
-        // => 函数可以理解为匿名函数
+        });
+
+        axios.get('api/getProductList')
         .then((res) => {
             console.log(res)
-            this.newsList = res.data.list
+            this.productList = res.data
         })
         .catch((error) => {
             comsole.log(error)
-        })
-        axios.get('api/getNewList')
-        // => 函数可以理解为匿名函数
+        });
+        
+        axios.get('api/getBoardList')
         .then((res) => {
             console.log(res)
-            this.newsList = res.data.list
+            this.boardList = res.data
         })
         .catch((error) => {
             comsole.log(error)
@@ -105,78 +79,9 @@ export default {
     },
     data() {
         return {
-            productList:{
-                pc:{
-                    title:"PC产品",
-                    list:[
-                        {
-                            title:"数据统计",
-                            url:"http://starcraft.com"
-                        },
-                        {
-                            title:"数据预测",
-                            url:"http://warcraft.com"
-                        },
-                        {
-                            title:"流量分析",
-                            url:"http://overwatch.com",
-                            hot:true
-                        },
-                        {
-                            title:"广告发布",
-                            url:"http://hearstone.com"
-                        }
-                    ],
-                    hr:true
-                },
-                app:{
-                    title:"手机应用类",
-                    list:[
-                        {
-                            title:"91助手",
-                            url:"http://weixin.com"
-                        },
-                        {
-                            title:"产品助手",
-                            url:"http://weixin.com",
-                            hot:true
-                        },
-                        {
-                            title:"智能地图",
-                            url:"http://maps.com"
-                        },
-                        {
-                            title:"语音助手",
-                            url:"http://phone.com",
-                            hot:true
-                        }
-                    ]
-                }
-            },
-            latestNews:{
-                list:[
-                    {
-                        title:"特别的爱给特别的你",
-                        url:"https://www.baidu.com/"
-                    },
-                    {
-                        title:"春娇与志明",
-                        url:"https://www.baidu.com/"
-                    },
-                    {
-                        title:"我要找到你",
-                        url:"https://www.baidu.com/"
-                    },
-                    {
-                        title:"多想在平庸的生活拥抱你",
-                        url:"https://www.baidu.com/"
-                    },
-                    {
-                        title:"红色高跟鞋",
-                        url:"https://www.baidu.com/"
-                    },
-                ]
-            }
+            productList:null,
+            latestNews:[],
+            boardList:null
         }
     },
 }
