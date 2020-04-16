@@ -8,6 +8,7 @@
                     <ul>
                         <li v-for='item in plist.list'>
                             <a v-bind:href='item.url'>{{ item.title }}</a>
+                            <span class='hot-tag' v-if='item.hot'>HOT</span>
                         </li>
                     </ul>
                     <div class='hr' v-if='plist.hr'></div>
@@ -29,31 +30,39 @@
             </div>
             <div class='index-border-list'>
                 <div class='index-border-item'>
-                    <h2>第一个</h2>
-                    <p>第一个的描述</p>
-                    <div class='index-border-buttom'>
-                        立即购买
+                    <div class='index-border-item-inner'>
+                        <h2>第一个</h2>
+                        <p>第一个的描述</p>
+                        <div class='index-border-buttom'>
+                            立即购买
+                        </div>
                     </div>
                 </div>
                 <div class='index-border-item'>
-                    <h2>第二个</h2>
-                    <p>第二个的描述</p>
-                    <div class='index-border-buttom'>
-                        立即购买
+                    <div class='index-border-item-inner'>
+                        <h2>第二个</h2>
+                        <p>第二个的描述</p>
+                        <div class='index-border-buttom'>
+                            立即购买
+                        </div>
                     </div>
                 </div>
                 <div class='index-border-item'>
-                    <h2>第三个</h2>
-                    <p>第三个的描述</p>
-                    <div class='index-border-buttom'>
-                        立即购买
+                    <div class='index-border-item-inner'>
+                        <h2>第三个</h2>
+                        <p>第三个的描述</p>
+                        <div class='index-border-buttom'>
+                            立即购买
+                        </div>
                     </div>
                 </div>
                 <div class='index-border-item'>
-                    <h2>第四个</h2>
-                    <p>第四个的描述</p>
-                    <div class='index-border-buttom'>
-                        立即购买
+                    <div class='index-border-item-inner'>
+                        <h2>第四个</h2>
+                        <p>第四个的描述</p>
+                        <div class='index-border-buttom'>
+                            立即购买
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,7 +72,37 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+    mounted(){
+        axios.get('api/getPcList')
+        // => 函数可以理解为匿名函数
+        .then((res) => {
+            console.log(res)
+            this.newsList = res.data.list
+        })
+        .catch((error) => {
+            comsole.log(error)
+        })
+        axios.get('api/getAppList')
+        // => 函数可以理解为匿名函数
+        .then((res) => {
+            console.log(res)
+            this.newsList = res.data.list
+        })
+        .catch((error) => {
+            comsole.log(error)
+        })
+        axios.get('api/getNewList')
+        // => 函数可以理解为匿名函数
+        .then((res) => {
+            console.log(res)
+            this.newsList = res.data.list
+        })
+        .catch((error) => {
+            comsole.log(error)
+        })
+    },
     data() {
         return {
             productList:{
@@ -99,7 +138,8 @@ export default {
                         },
                         {
                             title:"产品助手",
-                            url:"http://weixin.com"
+                            url:"http://weixin.com",
+                            hot:true
                         },
                         {
                             title:"智能地图",
@@ -107,7 +147,8 @@ export default {
                         },
                         {
                             title:"语音助手",
-                            url:"http://phone.com"
+                            url:"http://phone.com",
+                            hot:true
                         }
                     ]
                 }
@@ -182,23 +223,54 @@ export default {
         display:flex;
         flex-wrap:wrap;
         margin-top:20px;
-        justify-content:center;
+        justify-content:space-between;
     }
     .index-border-item{
         box-sizing:border-box;
         width:49%;
         height:125px;
         background:#ffffff;
-        padding-left:120px;
         box-shadow: 0 0 1px #ddd;
         margin-bottom:20px;
         border-radius: 0 0 10px 10px;
+        padding:20px;
+    }
+    .index-border-item-inner{
+        height:125px;
+        padding-left:180px;
+        background-image:url(../assets/logo.png);
+        background-repeat:no-repeat;
+        background-size:30%;
+    }
+    .index-border-item-inner h2{
+        font-size:18px;
+        font-weight:bolder;
+        color:#000;
+        margin-bottom:15px;
+    }
+    .index-border-item-inner p{
+        margin-bottom:15px;
+    }
+    .index-border-buttom{
+        width:80px;
+        height:35px;
+        background:#4fc08d;
+        color:#ffffff;
+        border-radius:5px;
+        text-align:center;
+        line-height:40px;
     }
     .index-border-item:nth-child(1),.index-border-item:nth-child(3){
         margin-right:2%;
     }
     .index-left-block ul li a{
         text-decoration:none;
+        color:black;
+    }
+    .hot-tag{
+        color:#ffffff;
+        background:#c04fb1;
+        padding:0 10px;
     }
 
     .tongtong{

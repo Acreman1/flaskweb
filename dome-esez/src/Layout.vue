@@ -2,7 +2,7 @@
   <div>
     <div class='app-head'>
       <div class='app-head-inner'>
-        <img src='./assets/logo.png'>
+        <img src='./assets/logo.png'><span class='app-title'>3C产品商城</span>
         <div class='head-nav'>
           <ul class='nav-list'>
             <li>登陆</li>
@@ -157,5 +157,11 @@ body{
 .app-content{
   width:1000px;
   margin:0 auto;
+}
+.app-title{
+  color:#ffffff;
+  font-size:30px;
+  font-weight:bolder;
+  margin-left:30px;
 }
 </style>
