@@ -1,43 +1,61 @@
 <template>
     <div class="slider-wrapper" @mouseover="clearInv" @mouseout="runInv">
-        <div class="slider-item item1">1</div>
-        <div class="slider-item item2">2</div>
-        <div class="slider-item item3">3</div>
-        <div class="slider-item item4">4</div>
+        <div v-show="nowIndex === index" class="slider-item" v-bind:class="['item'+[index+1]]" v-for="(imgUrl,index) in sliderImgList" v-bind:key="index">
+            <a herf="">
+                <img style="width:700px;height:300px" v-bind:src="imgUrl">
+            </a>
+        </div>
+
+        <a v-on:click="preHandler" class="btn pre-btn" href="javascript:void(0)">&lt;</a>
+        <a v-on:click="nextHandler" class="btn next-btn" href="javascript:void(0)">&gt;</a>
 
         <ul class="slider-dots">
-            <li>&lt;</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>&gt;</li>
+            <li v-on:click="clickDtos(index)" v-for="(item,index) in sliderImgList" v-bind:key="index">{{ index+1 }}</li>
         </ul>
     </div>
 </template>
 
 <script>
 export default {
-    props:{
-        inv:{
-            type:Number,
-            default:1000
-        }
-    },
     data() {
         return {
-            
+            nowIndex:0,
+            sliderImgList:[
+                require('../assets/pic1.jpg'),
+                require('../assets/pic2.jpg'),
+                require('../assets/pic3.jpg'),
+                require('../assets/pic4.jpg')
+            ]
         }
     },
     methods:{
+        clickDtos(index){
+            this.nowIndex = index
+        },
+        preHandler(){
+            this.nowIndex--;
+            if(this.nowIndex < 0){
+                this.nowIndex = 3
+            }
+        },
+        nextHandler(){
+            this.autoPlay()
+        },
+        autoPlay(){
+            this.nowIndex++;
+            if(this.nowIndex > 3){
+                this.nowIndex = 0
+            }
+        },
         runInv(){
-            setInterval(()=>{
-
-            },this.Inv)
+            this.invId = setInterval(this.autoPlay,2000)
         },
         clearInv(){
-
+            clearInterval(this.invId)
         }
+    },
+    created(){
+        this.runInv()
     }
 }
 </script>
@@ -71,8 +89,9 @@ export default {
     }
     .slider-dots{
         position:relative;
-        top:270px;
-        left:250px;
+        left:300px;
+        top:225px;
+        z-index:500;
     }
     .slider-dots li{
         width:15px;
@@ -83,6 +102,29 @@ export default {
         line-height:15px;
         float:left;
         margin:0 10px;
+        cursor: pointer;
+        opacity:0.6;
+    }
+    .btn{
+        display:inline-block;
+        text-decoration:none;
+        color:#ffffff;
+        width:50px;
+        height:50px;
+        background:#000000;
+        font-size:40px;
+        text-align:center;
+        line-height:50px;
+        position:relative;
+        top:125px;
+        z-index:300;
+    }
+    .pre-btn{
+        left:15px;
+        opacity:0.6;
+    }
+    .next-btn{
+        left:580px;
         opacity:0.6;
     }
 </style>

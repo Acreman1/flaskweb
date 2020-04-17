@@ -74,7 +74,7 @@ export default {
             this.boardList = res.data
         })
         .catch((error) => {
-            comsole.log(error)
+            console.log(error)
         })
     },
     data() {
