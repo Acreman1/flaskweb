@@ -1,10 +1,12 @@
 <template>
     <div class="slider-wrapper" @mouseover="clearInv" @mouseout="runInv">
-        <div v-show="nowIndex === index" class="slider-item" v-bind:class="['item'+[index+1]]" v-for="(imgUrl,index) in sliderImgList" v-bind:key="index">
+        <div v-show="nowIndex === index" class="slider-item" v-bind:class="['item'+[index+1]]" v-for="(item,index) in sliderImgList" v-bind:key="index">
             <a herf="">
-                <img style="width:700px;height:300px" v-bind:src="imgUrl">
+                <img style="width:700px;height:300px" v-bind:src="item.imgUrl">
             </a>
         </div>
+
+        <h2 class="slider-title">{{ sliderImgList[nowIndex].title }}</h2>
 
         <a v-on:click="preHandler" class="btn pre-btn" href="javascript:void(0)">&lt;</a>
         <a v-on:click="nextHandler" class="btn next-btn" href="javascript:void(0)">&gt;</a>
@@ -21,10 +23,22 @@ export default {
         return {
             nowIndex:0,
             sliderImgList:[
-                require('../assets/pic1.jpg'),
-                require('../assets/pic2.jpg'),
-                require('../assets/pic3.jpg'),
-                require('../assets/pic4.jpg')
+                {
+                    imgUrl:require('../assets/pic1.jpg'),
+                    title:"第一张图片"
+                },
+                {
+                    imgUrl:require('../assets/pic2.jpg'),
+                    title:"第二张图片"
+                },
+                {
+                    imgUrl:require('../assets/pic3.jpg'),
+                    title:"第三张图片"
+                },
+                {
+                    imgUrl:require('../assets/pic4.jpg'),
+                    title:"第四张图片"
+                }
             ]
         }
     },
@@ -90,7 +104,7 @@ export default {
     .slider-dots{
         position:relative;
         left:300px;
-        top:225px;
+        top:200px;
         z-index:500;
     }
     .slider-dots li{
@@ -125,6 +139,20 @@ export default {
     }
     .next-btn{
         left:580px;
+        opacity:0.6;
+    }
+    .slider-title{
+        background:#000000;
+        color:white;
+        width:180px;
+        height:30px;
+        position:relative;
+        top:260px;
+        left:10px;
+        z-index:400;
+        font-size:30px;
+        text-align:center;
+        line-height:30px;
         opacity:0.6;
     }
 </style>
